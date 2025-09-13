@@ -1,0 +1,14 @@
+{
+  "required" : [ "searchFullName" ],
+  "unevaluatedProperties" : false,
+  "properties" : {
+    "searchFullName" : {
+      "title" : "Full Name to Search",
+      "description" : "The approximate full name of the contact you are looking for.",
+      "lightning:type" : "lightning__textType",
+      "lightning:isPII" : false,
+      "copilotAction:isUserInput" : false
+    }
+  },
+  "lightning:type" : "lightning__objectType"
+}

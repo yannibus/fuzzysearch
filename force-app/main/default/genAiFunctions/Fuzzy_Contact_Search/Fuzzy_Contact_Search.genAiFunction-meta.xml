@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GenAiFunction xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>Finds the 5 most probable contacts based on a full name.</description>
+    <invocationTarget>FuzzyContactSearch</invocationTarget>
+    <invocationTargetType>apex</invocationTargetType>
+    <isConfirmationRequired>false</isConfirmationRequired>
+    <isIncludeInProgressIndicator>true</isIncludeInProgressIndicator>
+    <masterLabel>Fuzzy Contact Search</masterLabel>
+    <progressIndicatorMessage>je lance une recherche approximative</progressIndicatorMessage>
+</GenAiFunction>
