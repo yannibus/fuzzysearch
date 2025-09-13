@@ -1,18 +1,49 @@
-# Salesforce DX Project: Next Steps
+Fuzzy Contact Search for Salesforce
+An Apex class that provides an intelligent, fault-tolerant "fuzzy" search for Contact records in Salesforce. This utility is designed to find the most relevant contacts even when the search query contains typos, variations in names, or salutations.
 
-Now that you’ve created a Salesforce DX project, what’s next? Here are some documentation resources to get you started.
+Features
+Typo Tolerance: Correctly identifies contacts even with spelling mistakes in the first or last name (e.g., "Jhon Smoth" finds "John Smith").
 
-## How Do You Plan to Deploy Your Changes?
+Advanced Matching Algorithm: Uses a two-step process for optimal results:
 
-Do you want to deploy a set of changes, or create a self-contained application? Choose a [development model](https://developer.salesforce.com/tools/vscode/en/user-guide/development-models).
+A broad SOSL query to retrieve a list of potential candidates.
 
-## Configure Your Salesforce DX Project
+The Levenshtein distance algorithm to score and rank candidates based on similarity.
 
-The `sfdx-project.json` file contains useful configuration information for your project. See [Salesforce DX Project Configuration](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_ws_config.htm) in the _Salesforce DX Developer Guide_ for details about this file.
+Smart Normalization: Ignores common salutations (Mr., Mrs., Mme, etc.) and normalizes characters (handling accents like é, à, etc.) before comparison.
 
-## Read All About It
+Flow-Ready: Includes an @InvocableMethod, allowing you to easily integrate this fuzzy search capability directly into your Salesforce Flows without writing extra code.
 
-- [Salesforce Extensions Documentation](https://developer.salesforce.com/tools/vscode/)
-- [Salesforce CLI Setup Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_intro.htm)
-- [Salesforce DX Developer Guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_dev.meta/sfdx_dev/sfdx_dev_intro.htm)
-- [Salesforce CLI Command Reference](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_reference.meta/sfdx_cli_reference/cli_reference.htm)
+High Performance: Optimized to respect Governor Limits and includes a robust, high-coverage test class for reliable deployments.
+
+Usage
+From Apex
+You can call the method directly from your Apex code:
+
+String searchName = 'Laurin Beylai';
+List<Contact> probableContacts = FuzzyContactSearch.findMostProbableContacts(searchName);
+
+for (Contact c : probableContacts) {
+    System.debug('Found Contact: ' + c.Name);
+}
+
+
+From a Salesforce Flow
+Drag an Action element onto your Flow canvas.
+
+Search for the action named "Fuzzy Contact Search".
+
+In the searchFullName input variable, provide the name you want to search for.
+
+The action will return a list of the 5 most probable contacts in the foundContacts output variable.
+
+Deployment
+To deploy this component, retrieve the following files from this repository and deploy them to your Salesforce organization using Salesforce CLI or your preferred tool:
+
+force-app/main/default/classes/FuzzyContactSearch.cls
+
+force-app/main/default/classes/FuzzyContactSearch.cls-meta.xml
+
+force-app/main/default/classes/FuzzyContactSearchTest.cls
+
+force-app/main/default/classes/FuzzyContactSearchTest.cls-meta.xml
